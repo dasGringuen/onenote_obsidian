@@ -1,0 +1,6 @@
+# Per-vault plugin state (active section, colors, collapsed pages). Never commit it.
+data.json
+
+.DS_Store
+node_modules/
+*.zip

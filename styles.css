@@ -1,0 +1,396 @@
+/* Section Pages - panel styling. Light values follow OneNote's navigation panes. */
+
+.sp-root {
+  --sp-bg: #f8f8f8;
+  --sp-bg-pages: #f8f8f8;
+  --sp-hover: #ededed;
+  --sp-selected: #e0e0e0;
+  --sp-border: #e2e2e2;
+  --sp-text: #1f1f1f;
+  --sp-muted: #6b6b6b;
+  --sp-accent: #7719aa;
+  --sp-row-height: 36px;
+  --sp-indent: 14px;
+  padding: 0 !important;
+  overflow: hidden !important;
+}
+
+.theme-dark .sp-root {
+  --sp-bg: #1f1f1f;
+  --sp-bg-pages: #242424;
+  --sp-hover: #2e2e2e;
+  --sp-selected: #3b3b3b;
+  --sp-border: #343434;
+  --sp-text: #e8e8e8;
+  --sp-muted: #a0a0a0;
+  --sp-accent: #c98be6;
+}
+
+.sp-wrap {
+  display: flex;
+  height: 100%;
+  color: var(--sp-text);
+  font-size: 14px;
+}
+
+.sp-pane {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  height: 100%;
+}
+
+.sp-sections-pane {
+  flex: 0 0 var(--sp-split, 42%);
+  background: var(--sp-bg);
+}
+
+.sp-pages-pane {
+  flex: 1 1 0;
+  background: var(--sp-bg-pages);
+}
+
+.sp-divider {
+  flex: 0 0 5px;
+  cursor: col-resize;
+  background: var(--sp-border);
+  opacity: 0.6;
+}
+
+.sp-divider:hover {
+  background: var(--sp-accent);
+  opacity: 1;
+}
+
+.sp-list {
+  flex: 1 1 0;
+  overflow-y: auto;
+  outline: none;
+}
+
+.sp-row {
+  display: flex;
+  align-items: center;
+  height: var(--sp-row-height);
+  padding-right: 8px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.sp-row:hover {
+  background: var(--sp-hover);
+}
+
+.sp-row.is-active {
+  background: var(--sp-selected);
+}
+
+.sp-row.is-selected {
+  box-shadow: inset 0 0 0 1px var(--sp-border);
+}
+
+.sp-label {
+  flex: 1 1 0;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sp-chevron {
+  flex: 0 0 16px;
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--sp-muted);
+}
+
+.sp-chevron.is-clickable:hover {
+  color: var(--sp-text);
+}
+
+.sp-chevron svg {
+  width: 14px;
+  height: 14px;
+}
+
+/* Sections */
+
+.sp-section {
+  padding-left: calc(var(--sp-depth, 0) * var(--sp-indent));
+}
+
+.sp-tab {
+  flex: 0 0 6px;
+  width: 6px;
+  height: 26px;
+  margin-right: 10px;
+  border-radius: 0 2px 2px 0;
+}
+
+.sp-tab.is-group {
+  background: transparent;
+  flex-basis: 0;
+  width: 0;
+  margin-right: 4px;
+}
+
+.sp-section.sp-drop-into {
+  box-shadow: inset 0 0 0 2px var(--sp-accent);
+}
+
+/* Pages */
+
+.sp-page {
+  padding-left: calc(6px + var(--sp-depth, 0) * var(--sp-indent));
+}
+
+.sp-page .sp-chevron {
+  margin-right: 4px;
+}
+
+.sp-page.sp-drop-before {
+  box-shadow: inset 0 2px 0 var(--sp-accent);
+}
+
+.sp-page.sp-drop-after {
+  box-shadow: inset 0 -2px 0 var(--sp-accent);
+}
+
+/* Footer buttons and empty states */
+
+.sp-footer {
+  flex: 0 0 auto;
+  padding: 9px 12px;
+  border-top: 1px solid var(--sp-border);
+  color: var(--sp-accent);
+  cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sp-footer:hover {
+  background: var(--sp-hover);
+}
+
+.sp-empty {
+  padding: 12px;
+  color: var(--sp-muted);
+  font-size: 13px;
+}
+
+/* Modals */
+
+.sp-prompt-input {
+  width: 100%;
+}
+
+.sp-modal-buttons {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  margin-top: 14px;
+}
+
+.sp-swatches {
+  display: grid;
+  grid-template-columns: repeat(6, 32px);
+  gap: 10px;
+}
+
+.sp-swatch {
+  width: 32px;
+  height: 32px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.sp-swatch:hover,
+.sp-swatch.is-current {
+  outline: 2px solid var(--text-normal);
+  outline-offset: 2px;
+}
+
+.sp-custom-color {
+  margin-top: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sp-footer-second {
+  border-top: none;
+  padding-top: 0;
+}
+
+/* Freeform pages */
+
+.sp-ff-root {
+  padding: 0 !important;
+  overflow: auto !important;
+  display: flex;
+  flex-direction: column;
+  background: var(--background-primary);
+}
+
+.sp-ff-head {
+  flex: 0 0 auto;
+  padding: 28px 40px 0;
+}
+
+.sp-ff-title {
+  display: inline-block;
+  min-width: 260px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--background-modifier-border);
+  font-size: 28px;
+  font-weight: 400;
+  line-height: 1.25;
+  color: var(--text-normal);
+}
+
+.sp-ff-date {
+  margin-top: 8px;
+  font-size: 12px;
+  color: var(--text-muted);
+  white-space: pre;
+}
+
+.sp-ff-surface {
+  position: relative;
+  flex: 1 0 auto;
+  margin-top: 12px;
+  outline: none;
+  cursor: text;
+}
+
+.sp-ff-box {
+  position: absolute;
+  box-sizing: border-box;
+  padding: 16px 8px 6px;
+  border: 1px solid transparent;
+  border-radius: 2px;
+  cursor: text;
+}
+
+.sp-ff-box:hover,
+.sp-ff-box.is-selected,
+.sp-ff-box.is-editing {
+  border-color: var(--background-modifier-border-hover, var(--background-modifier-border));
+}
+
+.sp-ff-box.is-dragging {
+  opacity: 0.85;
+  user-select: none;
+}
+
+.sp-ff-handle {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 11px;
+  cursor: move;
+  background: var(--background-modifier-border);
+  opacity: 0;
+}
+
+.sp-ff-box:hover .sp-ff-handle,
+.sp-ff-box.is-selected .sp-ff-handle,
+.sp-ff-box.is-editing .sp-ff-handle {
+  opacity: 1;
+}
+
+.sp-ff-box.is-selected .sp-ff-handle {
+  background: var(--interactive-accent);
+}
+
+.sp-ff-resize {
+  position: absolute;
+}
+
+.sp-ff-resize-x {
+  top: 11px;
+  bottom: 10px;
+  right: -4px;
+  width: 8px;
+  cursor: ew-resize;
+}
+
+.sp-ff-resize-y {
+  left: 0;
+  right: 10px;
+  bottom: -4px;
+  height: 8px;
+  cursor: ns-resize;
+}
+
+.sp-ff-resize-xy {
+  right: -4px;
+  bottom: -4px;
+  width: 14px;
+  height: 14px;
+  cursor: nwse-resize;
+  border-right: 2px solid transparent;
+  border-bottom: 2px solid transparent;
+  border-bottom-right-radius: 3px;
+}
+
+.sp-ff-box:hover .sp-ff-resize-xy,
+.sp-ff-box.is-selected .sp-ff-resize-xy {
+  border-color: var(--text-faint);
+}
+
+.sp-ff-body {
+  min-height: 1.5em;
+  overflow-wrap: anywhere;
+}
+
+.sp-ff-body > :first-child {
+  margin-top: 0;
+}
+
+.sp-ff-body > :last-child {
+  margin-bottom: 0;
+}
+
+.sp-ff-body img {
+  max-width: 100%;
+}
+
+textarea.sp-ff-edit {
+  display: block;
+  width: 100%;
+  min-height: 1.5em;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  outline: none;
+  resize: none;
+  overflow: hidden;
+  font: inherit;
+  line-height: var(--line-height-normal, 1.5);
+  color: var(--text-normal);
+}
+
+textarea.sp-ff-edit:focus,
+textarea.sp-ff-edit:hover {
+  border: none;
+  box-shadow: none;
+  background: transparent;
+}
+
+/* Groups and dragging sections */
+
+.sp-section.is-group .sp-label {
+  font-weight: 500;
+}
+
+.sp-list.sp-drop-root {
+  box-shadow: inset 0 0 0 2px var(--sp-accent);
+}

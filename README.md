@@ -9,6 +9,19 @@ Status: personal project, version 0.2.5, developed on Obsidian 1.14 for desktop 
 Not in the community plugin directory. See [docs/NOTES.md](docs/NOTES.md) for what has and has
 not been tested.
 
+## Quick install
+
+From your vault's folder:
+
+```sh
+git clone https://github.com/dasGringuen/onenote_obsidian.git .obsidian/plugins/section-pages
+```
+
+Then switch on **Section Pages** in **Settings → Community plugins**.
+
+No terminal? Use the BRAT plugin instead: see [Install with BRAT](#install-with-brat). Other ways
+to download and two recommended settings are under [Install](#install).
+
 ## What it does
 
 **Two-pane navigation**
@@ -32,17 +45,105 @@ not been tested.
 
 ## Install
 
-There is no build step. The plugin is the three files at the top of this repository.
+The plugin is not in Obsidian's community plugin directory, so it is installed by hand. There is no
+build step: the plugin is the three files `main.js`, `manifest.json` and `styles.css` at the top of
+this repository. They go in a folder named `section-pages` inside your vault's plugin folder:
 
-1. In your vault, create the folder `.obsidian/plugins/section-pages/`.
-2. Copy `main.js`, `manifest.json` and `styles.css` into it.
-3. In Obsidian, open **Settings → Community plugins**. If Restricted mode is on, turn it off.
-4. Under **Installed plugins**, switch on **Section Pages**.
-5. Click the book icon in the left ribbon to open the panel.
+```
+<your vault>/.obsidian/plugins/section-pages/
+```
 
-To update, replace the three files, then switch the plugin off and on again in the same settings
-page (or restart Obsidian). Turning the plugin off closes any open freeform tabs; the pages
-themselves are not affected.
+`.obsidian` is a hidden folder. On macOS, press **Cmd+Shift+.** in Finder to show hidden folders;
+on Windows, turn on **View → Hidden items** in File Explorer. To find your vault's folder,
+right-click any note in Obsidian and choose **Reveal in Finder** (or **Show in system explorer**).
+
+Try it on a copy of your vault first. The plugin adds properties to your notes when you reorder
+pages (see [How your notes are stored](#how-your-notes-are-stored)).
+
+### Install with BRAT
+
+[BRAT](https://github.com/TfTHacker/obsidian42-brat) is a community plugin that installs plugins
+straight from GitHub and keeps them updated. It is the easiest way if you do not use a terminal.
+
+1. In Obsidian, open **Settings → Community plugins**. If Restricted mode is on, press
+   **Exit Restricted mode**.
+2. Press **Browse**, search for **BRAT**, then install and enable it.
+3. Open the command palette (**Cmd+P** on macOS, **Ctrl+P** elsewhere) and run
+   **BRAT: Add a beta plugin for testing**. The exact wording can differ between BRAT versions.
+4. Paste `https://github.com/dasGringuen/onenote_obsidian`, leave the version on latest, and add
+   the plugin.
+5. Under **Settings → Community plugins → Installed plugins**, switch on **Section Pages** if BRAT
+   has not already done it.
+6. Click the book icon in the left ribbon to open the panel.
+
+To update, run **BRAT: Check for updates to all beta plugins and UPDATE** from the command palette,
+or let BRAT check when Obsidian starts (an option in BRAT's settings).
+
+BRAT installs the latest release from this repository's
+[Releases](https://github.com/dasGringuen/onenote_obsidian/releases) page. If that page is empty,
+install by hand as described below.
+
+### Install by hand
+
+#### Step 1: get the files
+
+Pick one way.
+
+**With git (recommended: updating is one command)**
+
+```sh
+cd "/path/to/your vault"
+git clone https://github.com/dasGringuen/onenote_obsidian.git .obsidian/plugins/section-pages
+```
+
+This also brings the README, notes and tests into the folder. Obsidian ignores them.
+
+**Without git, from the terminal (macOS or Linux)**
+
+```sh
+cd "/path/to/your vault"
+mkdir -p .obsidian/plugins/section-pages
+cd .obsidian/plugins/section-pages
+for f in main.js manifest.json styles.css; do
+  curl -fsSLO "https://raw.githubusercontent.com/dasGringuen/onenote_obsidian/main/$f"
+done
+```
+
+**Without git, in the browser**
+
+1. Open <https://github.com/dasGringuen/onenote_obsidian>.
+2. Click the green **Code** button, then **Download ZIP**, and unzip it.
+3. Create the folder `.obsidian/plugins/section-pages/` in your vault.
+4. Copy `main.js`, `manifest.json` and `styles.css` from the unzipped folder into it.
+
+#### Step 2: turn it on
+
+1. Restart Obsidian, or open **Settings → Community plugins** and press the reload icon next to
+   **Installed plugins**.
+2. If Restricted mode is on, press **Exit Restricted mode**.
+3. Under **Installed plugins**, switch on **Section Pages**.
+4. Click the book icon in the left ribbon to open the panel.
+
+Then apply the two settings under [Recommended Obsidian settings](#recommended-obsidian-settings).
+
+### Updating
+
+1. Get the new files:
+   - with BRAT: run its update command, which also reloads the plugin, so skip the next step
+   - with git: `git pull` inside `.obsidian/plugins/section-pages`
+   - without git: repeat step 1 and replace the three files
+2. In **Settings → Community plugins**, switch **Section Pages** off and on again, or restart
+   Obsidian. The version shown in that list should match `manifest.json`.
+
+Turning the plugin off closes any open freeform tabs; the pages themselves are not affected. Your
+section colors and other panel state are kept in `data.json` in the same folder, which updates do
+not touch.
+
+### Uninstalling
+
+Switch the plugin off and delete the `section-pages` folder. Your notes stay as they are: the
+`page-order`, `page-level` and `page-type` properties remain in them and are harmless, and
+freeform pages still open as normal notes with their text in reading order.
 
 ### Recommended Obsidian settings
 

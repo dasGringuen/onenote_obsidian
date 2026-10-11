@@ -148,8 +148,25 @@ node --check main.js
 node tests/logic.test.js
 ```
 
-For a release, bump `version` in `manifest.json`, add the version to `versions.json`, and add an
-entry to `CHANGELOG.md`.
+## Releasing
+
+BRAT and Obsidian's own updater install from GitHub releases, not from the files on `main`. A
+release must have `main.js`, `manifest.json` and `styles.css` attached as assets, and its tag and
+title must be exactly the `version` in `manifest.json`, with no `v` in front (`0.2.5`, not `v0.2.5`).
+
+1. Bump `version` in `manifest.json`, add the version to `versions.json`, add an entry to
+   `CHANGELOG.md`.
+2. Run the checks above, commit and push.
+3. Create the release. With the GitHub CLI:
+
+   ```sh
+   gh release create 0.2.5 main.js manifest.json styles.css --title "0.2.5" --notes "See CHANGELOG.md"
+   ```
+
+   Or on the website: **Releases → Draft a new release**, type the version as a new tag, use the
+   same text as the title, drag the three files into the assets box, and publish.
+
+BRAT picks the release with the highest version number. Draft releases are not visible to it.
 
 ## Background
 

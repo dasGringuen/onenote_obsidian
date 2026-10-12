@@ -105,26 +105,42 @@ function subtreeEnd(levels, i) {
 
 /**
  * Given pages in their desired final sequence, return the page-order value for each.
- * Pages not in `moved` keep their value when possible, so a reorder rewrites as few notes
- * as it can. Falls back to renumbering the whole section.
+ * The longest run of unmoved pages whose values are already increasing keeps its values, and
+ * only the rest get new ones in the gaps, so a reorder rewrites as few notes as it can. Every
+ * write is a file change the sync client has to carry, and rewriting a whole section at once is
+ * what produces sync conflicts. Falls back to renumbering only when a gap is too small.
  */
+function keptIndices(seq, moved) {
+  // Longest strictly increasing subsequence of page-order among unmoved pages that have one.
+  const idx = [];
+  for (let i = 0; i < seq.length; i++) {
+    if (!moved.has(seq[i].path) && Number.isFinite(seq[i].order)) idx.push(i);
+  }
+  const len = idx.map(() => 1);
+  const prev = idx.map(() => -1);
+  let best = -1;
+  for (let a = 0; a < idx.length; a++) {
+    for (let b = 0; b < a; b++) {
+      if (seq[idx[b]].order < seq[idx[a]].order && len[b] + 1 > len[a]) { len[a] = len[b] + 1; prev[a] = b; }
+    }
+    if (best < 0 || len[a] > len[best]) best = a;
+  }
+  const keep = new Set();
+  for (let a = best; a >= 0; a = prev[a]) keep.add(idx[a]);
+  return keep;
+}
+
 function planOrders(seq, moved) {
   const n = seq.length;
   const result = new Array(n);
   let ok = true;
-  let last = -Infinity;
-  for (let i = 0; i < n; i++) {
-    if (moved.has(seq[i].path)) continue;
-    const o = seq[i].order;
-    if (!Number.isFinite(o) || o <= last) { ok = false; break; }
-    last = o;
-    result[i] = o;
-  }
+  const keep = keptIndices(seq, moved);
+  for (const k of keep) result[k] = seq[k].order;
   let i = 0;
   while (ok && i < n) {
-    if (!moved.has(seq[i].path)) { i++; continue; }
+    if (keep.has(i)) { i++; continue; }
     let j = i;
-    while (j < n && moved.has(seq[j].path)) j++;
+    while (j < n && !keep.has(j)) j++;
     const len = j - i;
     let lo = i > 0 ? result[i - 1] : null;
     let hi = j < n ? result[j] : null;

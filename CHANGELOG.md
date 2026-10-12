@@ -2,6 +2,12 @@
 
 All versions were built and tried on 2026-10-10 against Obsidian 1.14.4 on macOS.
 
+## 0.2.6
+
+- Reordering no longer rewrites every note in a section when one note has no `page-order` or is
+  out of order. Only the notes that need a new value are written, which avoids sync conflict
+  copies when the vault is in Google Drive or a similar folder.
+
 ## 0.2.5
 
 - Groups: "+ Add group" button, and an empty group now stays a group instead of showing as a section.

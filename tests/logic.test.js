@@ -56,6 +56,13 @@ test('a move changes only the moved pages when there is room', () => {
   assert.deepStrictEqual(L.planOrders([P('a', 3), P('b', 7)], new Set()), [3, 7]);
 });
 
+test('a note without an order, or out of order, does not renumber the rest', () => {
+  // These used to rewrite every note in the section, which a sync client then had to carry.
+  assert.deepStrictEqual(L.planOrders([P('a', 100), P('b', 300), P('c', NaN), P('d', 500)], new Set()), [100, 300, 400, 500]);
+  assert.deepStrictEqual(L.planOrders([P('a', 100), P('b', 200), P('c', 900), P('d', 300), P('e', 400)], new Set()), [100, 200, 250, 300, 400]);
+  assert.deepStrictEqual(L.planOrders([P('x', 1000), P('a', 100), P('b', 300), P('c', NaN)], new Set(['x'])), [0, 100, 300, 400]);
+});
+
 test('the section is renumbered when it has no order yet or no room is left', () => {
   assert.deepStrictEqual(L.planOrders([P('a', NaN), P('x', NaN), P('b', NaN)], new Set(['x'])), [100, 200, 300]);
   assert.deepStrictEqual(L.planOrders([P('a', NaN), P('b', NaN)], new Set()), [100, 200]);

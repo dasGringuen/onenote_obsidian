@@ -1,7 +1,7 @@
 {
   "id": "section-pages",
   "name": "Section Pages",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "minAppVersion": "1.5.7",
   "description": "Two-pane notebook navigation: colored sections on the left, hand-ordered pages with collapsible subpages on the right. Subpages are ordinary notes, not folders. Freeform pages let you click anywhere and type.",
   "author": "",

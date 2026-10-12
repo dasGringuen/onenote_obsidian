@@ -277,7 +277,9 @@ plugin's `data.json` inside `.obsidian/plugins/section-pages/`. Deleting that fi
 those; the page order and structure are in the notes.
 
 The first time you reorder or indent in a section, every note in that section gets a
-`page-order`. After that a move usually rewrites only the notes that moved.
+`page-order`. After that a move rewrites only the notes that moved, plus any note that has no
+`page-order` or is out of order (for example after a sync merge). The whole section is
+renumbered only when two neighbours are too close to fit a page between them.
 
 ## Development
 

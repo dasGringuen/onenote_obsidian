@@ -28,7 +28,11 @@ In file order:
      page's level. A page can be at most one level deeper than the page above it, and
      `effectiveLevels` enforces that when reading.
    - `planOrders`: given the desired sequence and which pages moved, returns the `page-order` for
-     each, changing as few notes as possible. Falls back to renumbering the section in steps of 100.
+     each, changing as few notes as possible: the longest run of unmoved pages that is already in
+     order keeps its values and everything else is fitted into the gaps. Falls back to
+     renumbering the section in steps of 100 only when a gap is too small. Fewer writes matter
+     because every write is a file change a sync client (Drive, iCloud, Dropbox) has to carry,
+     and rewriting a whole section at once is what turns into conflict copies.
    - `splitFront`, `isFreeformText`, `parseBoxes`, `serializeBoxes`, `stripBoxMarkers`: the
      freeform save format.
 3. **Modals.** Text prompt, delete confirmation, color picker.
